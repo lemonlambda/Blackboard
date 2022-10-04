@@ -3,6 +3,7 @@ use std::process::Command;
 use crate::toml_format::Config;
 
 use anyhow::{Result, Ok};
+use colored::Colorize;
 
 pub
 fn run (commands : Vec<String>, config : Config)
@@ -40,10 +41,16 @@ fn run (commands : Vec<String>, config : Config)
 	}
 
 	for x in commands {
-		println!("{x}");
-		Command::new(cmd)
+		println!("{}: {x}", "Running".green());
+		let output = Command::new(cmd)
 			.args([c, &x])
 			.output()?;
+		if !String::from_utf8_lossy(&output.stdout).is_empty() {
+			println!("{} {}{}{}: {}", "Stdout".yellow(), "[".bright_black(), output.status.code().unwrap_or(0), "]".bright_black(), String::from_utf8_lossy(&output.stdout));
+		}
+		if !String::from_utf8_lossy(&output.stderr).is_empty() {
+			println!("{} {}{}{}: {}", "Stderr".red(), "[".bright_black(), output.status.code().unwrap_or(0), "]".bright_black(), String::from_utf8_lossy(&output.stderr));
+		}
 	}
 
 	Ok(())
