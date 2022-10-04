@@ -43,6 +43,10 @@ pub struct Meta
 	  header_dirs : Option<String>,
 	pub
 	  obj_files : Option<String>,
+	pub
+	  compiler_args : Option<String>,
+	pub
+	  linker_args : Option<String>,
 }
 
 #[derive(Deserialize, Clone, Debug, Default)]

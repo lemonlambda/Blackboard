@@ -27,6 +27,8 @@ fn run (commands : Vec<String>, config : Config)
 		))
 		.replace("${name}", &config.clone().package.name)
 		.replace("${version}", &config.clone().package.version)
+		.replace("${compiler_args}", &config.clone().meta.unwrap_or_default().compiler_args.unwrap_or(String::from("")))
+		.replace("${linker_args}", &config.clone().meta.unwrap_or_default().linker_args.unwrap_or(String::from("")))
 	}).collect::<Vec<String>>();
 
 	let cmd;
