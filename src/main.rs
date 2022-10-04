@@ -55,7 +55,7 @@ fn main ()
 	run(
 		toml.clone().linking.unwrap_or_default().run.unwrap_or(
 			vec![ 
-				String::from("${compiler} ${linker_args} -B ${linker} ${obj_files} -o ./target/bin/${name}-${version}"),
+				String::from("${compiler} ${linker_args} -B ${linker} ${obj_files} -o ${output_name}"),
 			]
 		), 
 		toml.clone()

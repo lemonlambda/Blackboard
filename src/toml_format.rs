@@ -47,6 +47,8 @@ pub struct Meta
 	  compiler_args : Option<String>,
 	pub
 	  linker_args : Option<String>,
+	pub
+	  output_name : Option<String>,
 }
 
 #[derive(Deserialize, Clone, Debug, Default)]
