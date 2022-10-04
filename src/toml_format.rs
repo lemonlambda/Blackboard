@@ -40,7 +40,7 @@ pub struct Meta
 	pub
 	  src_files : Option<String>,
 	pub
-	  header_files : Option<String>,
+	  header_dirs : Option<String>,
 	pub
 	  obj_files : Option<String>,
 }

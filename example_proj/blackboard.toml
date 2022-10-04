@@ -8,7 +8,7 @@ linker = "mold"
 
 [meta]
 src_files = "find ./src/* -name \"*.c\""
-header_files = "find ./src/include/* -type d"
+header_dirs = "find ./src/include/* -type d"
 obj_files = "find ./target/obj/* -name \"*.o\""
 
 [compile]
