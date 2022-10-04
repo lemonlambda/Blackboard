@@ -4,6 +4,7 @@ mod command_builder;
 use std::fs::read_to_string;
 
 use anyhow::{Result, Ok};
+use colored::Colorize;
 use command_builder::run;
 use toml_format::Config;
 
@@ -14,6 +15,8 @@ fn main ()
 	let toml : Config = toml::from_str(&contents)?;
 
 	// Compiler
+
+	println!("{}", "Compiling...".bright_magenta().bold());
 
 	run(
 		toml.clone().compile.unwrap_or_default().before.unwrap_or(
@@ -44,6 +47,8 @@ fn main ()
 	)?;
 
 	// Linker
+
+	println!("{}", "Linking...".bright_magenta().bold());
 
 	run(
 		toml.clone().linking.unwrap_or_default().before.unwrap_or(
