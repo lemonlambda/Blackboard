@@ -47,20 +47,20 @@ pub struct Meta
 pub struct Compile 
 {
 	pub
-	  before : Option<String>,
+	  before : Option<Vec<String>>,
 	pub
-	  run : Option<String>,
+	  run : Option<Vec<String>>,
 	pub
-	  after : Option<String>,
+	  after : Option<Vec<String>>,
 }
 
 #[derive(Deserialize)]
 pub struct Linking 
 {
 	pub
-	  before : Option<String>,
+	  before : Option<Vec<String>>,
 	pub
-	  run : Option<String>,
+	  run : Option<Vec<String>>,
 	pub
-	  after : Option<String>,
+	  after : Option<Vec<String>>,
 }
