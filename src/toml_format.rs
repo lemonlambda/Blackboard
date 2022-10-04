@@ -7,13 +7,13 @@ pub struct Config
 	pub
 	  package : Package,
 	pub
-	  tools : Tools,
+	  tools : Option<Tools>,
 	pub
-	  meta : Meta,
+	  meta : Option<Meta>,
 	pub
-	  compile : Compile,
+	  compile : Option<Compile>,
 	pub
-	  linking : Linking,
+	  linking : Option<Linking>,
 }
 
 #[derive(Deserialize, Clone, Debug)]
@@ -25,7 +25,7 @@ pub struct Package
 	  version : String,
 }
 
-#[derive(Deserialize, Clone, Debug)]
+#[derive(Deserialize, Clone, Debug, Default)]
 pub struct Tools 
 {
 	pub
@@ -34,7 +34,7 @@ pub struct Tools
 	  linker : Option<String>,
 }
 
-#[derive(Deserialize, Clone, Debug)]
+#[derive(Deserialize, Clone, Debug, Default)]
 pub struct Meta 
 {
 	pub
@@ -45,7 +45,7 @@ pub struct Meta
 	  obj_files : Option<String>,
 }
 
-#[derive(Deserialize, Clone, Debug)]
+#[derive(Deserialize, Clone, Debug, Default)]
 pub struct Compile 
 {
 	pub
@@ -56,7 +56,7 @@ pub struct Compile
 	  after : Option<Vec<String>>,
 }
 
-#[derive(Deserialize, Clone, Debug)]
+#[derive(Deserialize, Clone, Debug, Default)]
 pub struct Linking 
 {
 	pub
