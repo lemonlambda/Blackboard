@@ -11,7 +11,7 @@ fn run (commands : Vec<String>, config : Config)
 {
 	let commands = commands.into_iter().map(|x| {
 		x
-		.replace("${output_name}", &config.clone().meta.unwrap_or_default().output_name.unwrap_or(String::from("${name}-${version}")))
+		.replace("${output_name}", &config.clone().meta.unwrap_or_default().output_name.unwrap_or(String::from("./target/bin/${name}-${version}")))
 		.replace("${compiler}", &config.clone().tools.unwrap_or_default().compiler.unwrap_or(String::from("clang")))
 		.replace("${linker}", &config.clone().tools.unwrap_or_default().linker.unwrap_or(String::from("clang")))
 		.replace("${src_files}", &format!(
