@@ -16,7 +16,7 @@ fn main ()
 	// Compiler
 
 	run(
-		toml.clone().compile.unwrap_or_default().after.unwrap_or(
+		toml.clone().compile.unwrap_or_default().before.unwrap_or(
 			vec![
 				String::from("mkdir -p ./target/obj"),
 				String::from("mkdir -p ./target/bin"),
