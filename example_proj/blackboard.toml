@@ -7,15 +7,25 @@ compiler = "clang"
 linker = "mold"
 
 [meta]
-src_files = "find ./src/* -name \".c\""
+src_files = "find ./src/* -name \"*.c\""
 header_files = "find ./src/include/* -type d"
+obj_files = "find ./target/obj/* -name \"*.o\""
 
 [compile]
-before = [ "mkdir -p target" ]
-run = [ "" ]
-after = [ "" ]
+before = [ 
+	"mkdir -p ./target/obj",
+	"mkdir -p ./target/bin",
+]
+run = [ 
+	"${compiler} -c ${src_files} -I ${header_files}",
+	"mv *.o target/obj",
+]
 
 [linking]
-before = [ "" ]
-run = [ "" ]
-after = [ "" ]
+run = [ 
+	"${compiler} -B ${linker} ${obj_files} -o ./target/bin/${name}-${version}"
+]
+after = [
+	# clean up
+	"rm -rf ./target/obj" 
+]
