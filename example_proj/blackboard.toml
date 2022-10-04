@@ -3,5 +3,4 @@ name = "example"
 version = "1.0.0"
 
 [tools]
-compiler = "clang"
 linker = "mold"
