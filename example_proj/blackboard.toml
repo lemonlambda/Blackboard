@@ -17,7 +17,7 @@ before = [
 	"mkdir -p ./target/bin",
 ]
 run = [ 
-	"${compiler} -c ${src_files} -I ${header_files}",
+	"${compiler} -c ${src_files} -I ${header_dirs}",
 	"mv *.o target/obj",
 ]
 
