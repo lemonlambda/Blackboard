@@ -1,7 +1,7 @@
 use serde_derive::Deserialize;
 
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone, Debug)]
 pub struct Config 
 {
 	pub
@@ -16,7 +16,7 @@ pub struct Config
 	  linking : Linking,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone, Debug)]
 pub struct Package 
 {
 	pub
@@ -25,7 +25,7 @@ pub struct Package
 	  version : String,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone, Debug)]
 pub struct Tools 
 {
 	pub
@@ -34,7 +34,7 @@ pub struct Tools
 	  linker : Option<String>,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone, Debug)]
 pub struct Meta 
 {
 	pub
@@ -45,7 +45,7 @@ pub struct Meta
 	  obj_files : Option<String>,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone, Debug)]
 pub struct Compile 
 {
 	pub
@@ -56,7 +56,7 @@ pub struct Compile
 	  after : Option<Vec<String>>,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone, Debug)]
 pub struct Linking 
 {
 	pub
