@@ -12,9 +12,18 @@ fn run (commands : Vec<String>, config : Config)
 		x
 		.replace("${compiler}", &config.clone().tools.compiler.unwrap_or(String::from("clang")))
 		.replace("${linker}", &config.clone().tools.linker.unwrap_or(String::from("clang")))
-		.replace("${src_files}", &config.clone().meta.src_files.unwrap_or(String::from("find ./src/* -name \"*.c\"")))
-		.replace("${header_dirs}", &config.clone().meta.header_dirs.unwrap_or(String::from("find ./src/include/* -type d")))
-		.replace("${obj_files}", &config.clone().meta.obj_files.unwrap_or(String::from("find ./target/obj/* -name \"*.o\"")))
+		.replace("${src_files}", &format!(
+			"\"$({})\"", 
+			config.clone().meta.src_files.unwrap_or(String::from("find ./src/ -name \"*.c\""))
+		))
+		.replace("${header_dirs}", &format!(
+			"\"$({})\"", 
+			config.clone().meta.header_dirs.unwrap_or(String::from("find ./src/include/ -type d"))
+		))
+		.replace("${obj_files}", &format!(
+			"\"$({})\"", 
+			config.clone().meta.obj_files.unwrap_or(String::from("find ./target/obj/ -name \"*.o\""))
+		))
 		.replace("${name}", &config.clone().package.name)
 		.replace("${version}", &config.clone().package.version)
 	}).collect::<Vec<String>>();
@@ -31,6 +40,7 @@ fn run (commands : Vec<String>, config : Config)
 	}
 
 	for x in commands {
+		println!("{x}");
 		Command::new(cmd)
 			.args([c, &x])
 			.output()?;
