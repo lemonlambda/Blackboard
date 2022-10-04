@@ -1,4 +1,5 @@
 mod toml_format;
+mod command_builder;
 
 use std::fs::read_to_string;
 
