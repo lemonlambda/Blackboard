@@ -41,6 +41,8 @@ pub struct Meta
 	  src_files : Option<String>,
 	pub
 	  header_files : Option<String>,
+	pub
+	  obj_files : Option<String>,
 }
 
 #[derive(Deserialize)]
