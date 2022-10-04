@@ -23,11 +23,11 @@ fn run (commands : Vec<String>, config : Config)
 	let c;
 
 	if cfg!(windows) {
-		cmd = "sh";
-		c = "-c";
-	} else {
 		cmd = "cmd";
 		c = "/C";
+	} else {
+		cmd = "sh";
+		c = "-c";
 	}
 
 	for x in commands {
