@@ -1,0 +1,21 @@
+[package]
+name = "example"
+version = "1.0.0"
+
+[tools]
+compiler = "clang"
+linker = "mold"
+
+[meta]
+src_files = "find ./src/* -name \".c\""
+header_files = "find ./src/include/* -type d"
+
+[compile]
+before = [ "mkdir -p target" ]
+run = [ "" ]
+after = [ "" ]
+
+[linking]
+before = [ "" ]
+run = [ "" ]
+after = [ "" ]
