@@ -4,7 +4,7 @@ A toml based build tool for C
 ## Installation
 Install by running
 ```
-cargo intall --git https://github.com/Chalk-Organization/Blackboard.git
+cargo install --git https://github.com/Chalk-Organization/Blackboard.git
 ```
 
 ## Setup
