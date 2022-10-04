@@ -18,6 +18,8 @@ before = [
 ]
 run = [ 
 	"${compiler} -c ${src_files} -I ${header_dirs}",
+]
+after = [
 	"mv *.o target/obj",
 ]
 
