@@ -26,7 +26,7 @@ fn main ()
 			]
 		), 
 		toml.clone(),
-		"before"
+		"Before"
 	)?;
 
 	run(
@@ -36,7 +36,7 @@ fn main ()
 			]
 		), 
 		toml.clone(),
-		"run"
+		"Run"
 	)?;
 
 	run(
@@ -46,7 +46,7 @@ fn main ()
 			]
 		), 
 		toml.clone(),
-		"after"
+		"After"
 	)?;
 
 	// Linker
@@ -58,7 +58,7 @@ fn main ()
 			vec![]
 		), 
 		toml.clone(),
-		"before",
+		"Before",
 	)?;
 
 	run(
@@ -68,7 +68,7 @@ fn main ()
 			]
 		), 
 		toml.clone(),
-		"run"
+		"Run"
 	)?;
 
 	run(
@@ -78,7 +78,7 @@ fn main ()
 			]
 		), 
 		toml.clone(),
-		"after"
+		"After"
 	)?;
 
 	Ok(())
