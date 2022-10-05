@@ -6,7 +6,7 @@ use anyhow::{Result, Ok};
 use colored::Colorize;
 
 pub
-fn run (commands : Vec<String>, config : Config)
+fn run (commands : Vec<String>, config : Config, stage : &str)
 -> Result<()>
 {
 	let commands = commands.into_iter().map(|x| {
@@ -44,7 +44,7 @@ fn run (commands : Vec<String>, config : Config)
 	}
 
 	for x in commands {
-		println!("{}: {x}", "Running".green());
+		println!("{} {}: {x}", stage.bright_blue(), "Running".bright_black());
 		let output = Command::new(cmd)
 			.args([c, &x])
 			.output()?;

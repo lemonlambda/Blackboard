@@ -25,7 +25,8 @@ fn main ()
 				String::from("mkdir -p ./target/bin"),
 			]
 		), 
-		toml.clone()
+		toml.clone(),
+		"before"
 	)?;
 
 	run(
@@ -34,7 +35,8 @@ fn main ()
 				String::from("${compiler} ${compiler_args} -c ${src_files} -I ${header_dirs}"),
 			]
 		), 
-		toml.clone()
+		toml.clone(),
+		"run"
 	)?;
 
 	run(
@@ -43,7 +45,8 @@ fn main ()
 				String::from("mv *.o target/obj"),
 			]
 		), 
-		toml.clone()
+		toml.clone(),
+		"after"
 	)?;
 
 	// Linker
@@ -54,7 +57,8 @@ fn main ()
 		toml.clone().linking.unwrap_or_default().before.unwrap_or(
 			vec![]
 		), 
-		toml.clone()
+		toml.clone(),
+		"before",
 	)?;
 
 	run(
@@ -63,7 +67,8 @@ fn main ()
 				String::from("${compiler} ${linker_args} -B ${linker} ${obj_files} -o ${output_name}"),
 			]
 		), 
-		toml.clone()
+		toml.clone(),
+		"run"
 	)?;
 
 	run(
@@ -72,7 +77,8 @@ fn main ()
 				String::from("rm -rf ./target/obj"),
 			]
 		), 
-		toml.clone()
+		toml.clone(),
+		"after"
 	)?;
 
 	Ok(())
