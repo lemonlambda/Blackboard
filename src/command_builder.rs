@@ -44,7 +44,7 @@ fn run (commands : Vec<String>, config : Config, stage : &str)
 	}
 
 	for x in commands {
-		println!("\t{} {}: {x}", stage.bright_blue(), "Stage".bright_black());
+		println!("\t{} {}: {x}", stage.bright_blue(), "Task".bright_black());
 		let output = Command::new(cmd)
 			.args([c, &x])
 			.output()?;
