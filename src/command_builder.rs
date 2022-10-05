@@ -49,10 +49,10 @@ fn run (commands : Vec<String>, config : Config, stage : &str)
 			.args([c, &x])
 			.output()?;
 		if !String::from_utf8_lossy(&output.stdout).is_empty() {
-			println!("{} {}{}{}: {}", "Stdout".yellow(), "[".bright_black(), output.status.code().unwrap_or(0), "]".bright_black(), String::from_utf8_lossy(&output.stdout));
+			print!("{} {}{}{}: {}", "Stdout".yellow(), "[".bright_black(), output.status.code().unwrap_or(0), "]".bright_black(), String::from_utf8_lossy(&output.stdout));
 		}
 		if !String::from_utf8_lossy(&output.stderr).is_empty() {
-			println!("{} {}{}{}: {}", "Stderr".red(), "[".bright_black(), output.status.code().unwrap_or(0), "]".bright_black(), String::from_utf8_lossy(&output.stderr));
+			print!("{} {}{}{}: {}", "Stderr".red(), "[".bright_black(), output.status.code().unwrap_or(0), "]".bright_black(), String::from_utf8_lossy(&output.stderr));
 		}
 	}
 
