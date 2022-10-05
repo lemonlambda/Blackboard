@@ -44,15 +44,15 @@ fn run (commands : Vec<String>, config : Config, stage : &str)
 	}
 
 	for x in commands {
-		println!("{} {}: {x}", stage.bright_blue(), "Running".bright_black());
+		println!("\t{} {}: {x}", stage.bright_blue(), "Running".bright_black());
 		let output = Command::new(cmd)
 			.args([c, &x])
 			.output()?;
 		if !String::from_utf8_lossy(&output.stdout).is_empty() {
-			print!("{} {}{}{}: {}", "Stdout".yellow(), "[".bright_black(), output.status.code().unwrap_or(0), "]".bright_black(), String::from_utf8_lossy(&output.stdout));
+			print!("\t{} {}{}{}: {}", "Stdout".yellow(), "[".bright_black(), output.status.code().unwrap_or(0), "]".bright_black(), String::from_utf8_lossy(&output.stdout));
 		}
 		if !String::from_utf8_lossy(&output.stderr).is_empty() {
-			print!("{} {}{}{}: {}", "Stderr".red(), "[".bright_black(), output.status.code().unwrap_or(0), "]".bright_black(), String::from_utf8_lossy(&output.stderr));
+			print!("\t{} {}{}{}: {}", "Stderr".red(), "[".bright_black(), output.status.code().unwrap_or(0), "]".bright_black(), String::from_utf8_lossy(&output.stderr));
 		}
 	}
 
