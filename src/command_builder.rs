@@ -2,13 +2,11 @@ use std::process::Command;
 
 use crate::toml_format::Config;
 
-use anyhow::{Result, Ok};
+use anyhow::{Ok, Result};
 use colored::Colorize;
 
-pub
-fn run (commands : Vec<String>, config : Config, stage : &str)
--> Result<()>
-{
+pub fn run(commands: Vec<String>, config: Config, stage: &str) -> Result<()> {
+    #[rustfmt::skip]
 	let commands = commands.into_iter().map(|x| {
 		x
 		.replace("${output_name}", &config.clone().meta.unwrap_or_default().output_name.unwrap_or(String::from("./target/bin/${name}-${version}")))
@@ -32,29 +30,41 @@ fn run (commands : Vec<String>, config : Config, stage : &str)
 		.replace("${linker_args}", &config.clone().meta.unwrap_or_default().linker_args.unwrap_or(String::from("")))
 	}).collect::<Vec<String>>();
 
-	let cmd;
-	let c;
+    let cmd;
+    let c;
 
-	if cfg!(windows) {
-		cmd = "cmd";
-		c = "/C";
-	} else {
-		cmd = "sh";
-		c = "-c";
-	}
+    if cfg!(windows) {
+        cmd = "cmd";
+        c = "/C";
+    } else {
+        cmd = "sh";
+        c = "-c";
+    }
 
-	for x in commands {
-		println!("\t{} {}: {x}", stage.bright_blue(), "Task".bright_black());
-		let output = Command::new(cmd)
-			.args([c, &x])
-			.output()?;
-		if !String::from_utf8_lossy(&output.stdout).is_empty() {
-			print!("\t{} {}{}{}: {}", "Stdout".yellow(), "[".bright_black(), output.status.code().unwrap_or(0), "]".bright_black(), String::from_utf8_lossy(&output.stdout));
-		}
-		if !String::from_utf8_lossy(&output.stderr).is_empty() {
-			print!("\t{} {}{}{}: {}", "Stderr".red(), "[".bright_black(), output.status.code().unwrap_or(0), "]".bright_black(), String::from_utf8_lossy(&output.stderr));
-		}
-	}
+    for x in commands {
+        println!("\t{} {}: {x}", stage.bright_blue(), "Task".bright_black());
+        let output = Command::new(cmd).args([c, &x]).output()?;
+        if !String::from_utf8_lossy(&output.stdout).is_empty() {
+            print!(
+                "\t{} {}{}{}: {}",
+                "Stdout".yellow(),
+                "[".bright_black(),
+                output.status.code().unwrap_or(0),
+                "]".bright_black(),
+                String::from_utf8_lossy(&output.stdout)
+            );
+        }
+        if !String::from_utf8_lossy(&output.stderr).is_empty() {
+            print!(
+                "\t{} {}{}{}: {}",
+                "Stderr".red(),
+                "[".bright_black(),
+                output.status.code().unwrap_or(0),
+                "]".bright_black(),
+                String::from_utf8_lossy(&output.stderr)
+            );
+        }
+    }
 
-	Ok(())
+    Ok(())
 }
