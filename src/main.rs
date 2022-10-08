@@ -37,10 +37,7 @@ fn main() -> Result<()> {
             .compile
             .unwrap_or_default()
             .before
-            .unwrap_or(vec![
-                String::from("mkdir -p ./target/obj"),
-                String::from("mkdir -p ./target/bin"),
-            ]),
+            .unwrap_or(vec![String::from("mkdir -p ./target/obj ./target/bin")]),
         toml.clone(),
         "Before",
     )?;
