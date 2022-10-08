@@ -30,7 +30,9 @@ fn main() -> Result<()> {
 
     // Compiler
 
-    println!("{}", "Compiling...".bright_magenta().bold());
+    if !args.quiet {
+        println!("{}", "Compiling...".bright_magenta().bold());
+    }
 
     run(
         toml.clone()
@@ -69,7 +71,9 @@ fn main() -> Result<()> {
 
     // Linker
 
-    println!("{}", "Linking...".bright_magenta().bold());
+    if !args.quiet {
+        println!("{}", "Linking...".bright_magenta().bold());
+    }
 
     run(
         toml.clone()
