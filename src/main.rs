@@ -1,14 +1,30 @@
 mod command_builder;
 mod toml_format;
 
-use std::fs::read_to_string;
+use std::{env, fs::read_to_string, path::Path};
 
 use anyhow::{Ok, Result};
+use clap::{command, Parser};
 use colored::Colorize;
 use command_builder::run;
 use toml_format::Config;
 
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+struct Args {
+    #[arg(short, long, default_value_t = false)]
+    quiet: bool,
+
+    #[arg(short, long, default_value = "./")]
+    path: String,
+}
+
 fn main() -> Result<()> {
+    let args = Args::parse();
+
+    let root = Path::new(&args.path);
+    assert!(env::set_current_dir(&root).is_ok());
+
     let contents = read_to_string("blackboard.toml")?;
     let toml: Config = toml::from_str(&contents)?;
 
