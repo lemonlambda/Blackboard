@@ -4,26 +4,33 @@ version = "1.0.0"
 
 # this is a fully filled out toml
 
-[meta]
-src_files = "find ./src/ -name \"*.c\""         # optional
-header_dirs = "find ./src/include -type d"      # optional
-obj_files = "find ./target/obj -name \"*.o\""   # optional
-compiler_args = "-O2 -Wpedantic"                # optional
-linker_args = ""                                # optional
-output_name = "./target/bin/${name}-${version}" # optional
+[[bin]]
+default = true   # optional
+name = "default" # optional
 
-[tools]
+[[bin.tools]]
 compiler = "clang" # optional
 linker = "mold"    # optional
 
-[compile]
-before = ["mkdir -p ./target/bin", "mkdir -p ./target/obj"] # optional
+[[bin.meta]]
+src_files = "find ./src/ -name \"*.c\""       # optional
+header_dirs = "find ./src/include -type d"    # optional
+obj_files = "find ./target/obj -name \"*.o\"" # optional
+
+[[bin.args]]
+compiler_args = "-O2 -Wpedantic"               # optional
+linker_args = ""                               # optional
+out_path = "./target/bin/"                     # optional 
+output_name = "${out_path}/${name}-${version}" # optional
+
+[[bin.compiling]]
+before = ["mkdir -p ./target/bin ./target/obj"] # optional
 run = [
 	"${compiler} ${compiler_args} -c ${src_files} -I ${header_dirs}",
 ] # optional
 after = ["mv *.o target/obj"] # optional
 
-[linking]
+[[bin.linking]]
 before = [] # optional
 run = [
 	"${compiler} ${linker_args} -B ${linker} ${obj_files} -o ${output_name}",
