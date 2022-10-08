@@ -40,6 +40,7 @@ fn main() -> Result<()> {
             .unwrap_or(vec![String::from("mkdir -p ./target/obj ./target/bin")]),
         toml.clone(),
         "Before",
+        args.quiet,
     )?;
 
     run(
@@ -52,6 +53,7 @@ fn main() -> Result<()> {
             )]),
         toml.clone(),
         "Run",
+        args.quiet,
     )?;
 
     run(
@@ -62,6 +64,7 @@ fn main() -> Result<()> {
             .unwrap_or(vec![String::from("mv *.o target/obj")]),
         toml.clone(),
         "After",
+        args.quiet,
     )?;
 
     // Linker
@@ -76,6 +79,7 @@ fn main() -> Result<()> {
             .unwrap_or(vec![]),
         toml.clone(),
         "Before",
+        args.quiet,
     )?;
 
     run(
@@ -88,6 +92,7 @@ fn main() -> Result<()> {
             )]),
         toml.clone(),
         "Run",
+        args.quiet,
     )?;
 
     run(
@@ -98,6 +103,7 @@ fn main() -> Result<()> {
             .unwrap_or(vec![String::from("rm -rf ./target/obj")]),
         toml.clone(),
         "After",
+        args.quiet,
     )?;
 
     Ok(())

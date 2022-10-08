@@ -5,7 +5,7 @@ use crate::toml_format::Config;
 use anyhow::{Ok, Result};
 use colored::Colorize;
 
-pub fn run(commands: Vec<String>, config: Config, stage: &str) -> Result<()> {
+pub fn run(commands: Vec<String>, config: Config, stage: &str, quiet: bool) -> Result<()> {
     let commands = commands.into_iter().map(|x| {
         let mut last = x.clone();
         loop {
@@ -49,9 +49,14 @@ pub fn run(commands: Vec<String>, config: Config, stage: &str) -> Result<()> {
     }
 
     for x in commands {
-        println!("\t{} {}: {x}", stage.bright_blue(), "Task".bright_black());
+        if !quiet {
+            println!("\t{} {}: {x}", stage.bright_blue(), "Task".bright_black());
+        }
         let output = Command::new(cmd).args([c, &x]).output()?;
         if !String::from_utf8_lossy(&output.stdout).is_empty() {
+            if quiet {
+                println!("\t{} {}: {x}", stage.bright_blue(), "Task".bright_black());
+            }
             print!(
                 "\t{} {}{}{}: {}",
                 "Stdout".yellow(),
@@ -62,6 +67,9 @@ pub fn run(commands: Vec<String>, config: Config, stage: &str) -> Result<()> {
             );
         }
         if !String::from_utf8_lossy(&output.stderr).is_empty() {
+            if quiet {
+                println!("\t{} {}: {x}", stage.bright_blue(), "Task".bright_black());
+            }
             print!(
                 "\t{} {}{}{}: {}",
                 "Stderr".red(),
