@@ -5,6 +5,111 @@ use crate::toml_format::{Bin, Config};
 use anyhow::{Ok, Result};
 use colored::Colorize;
 
+#[derive(Clone)]
+pub struct CommandBuilder {
+    config: Config,
+    bin: Bin,
+    quiet: bool,
+}
+
+impl CommandBuilder {
+    pub fn new(config: Config, bin: Bin, quiet: bool) -> Self {
+        Self { config, bin, quiet }
+    }
+
+    pub fn comp_before(self) -> Result<()> {
+        run(
+            self.bin
+                .clone()
+                .compiling
+                .unwrap_or_default()
+                .before
+                .unwrap_or_default(),
+            self.config,
+            self.bin,
+            "Before",
+            self.quiet,
+        )?;
+        Ok(())
+    }
+    pub fn comp_run(self) -> Result<()> {
+        run(
+            self.bin
+                .clone()
+                .compiling
+                .unwrap_or_default()
+                .run
+                .unwrap_or_default(),
+            self.config,
+            self.bin,
+            "Before",
+            self.quiet,
+        )?;
+        Ok(())
+    }
+    pub fn comp_after(self) -> Result<()> {
+        run(
+            self.bin
+                .clone()
+                .compiling
+                .unwrap_or_default()
+                .after
+                .unwrap_or_default(),
+            self.config,
+            self.bin,
+            "Before",
+            self.quiet,
+        )?;
+        Ok(())
+    }
+
+    pub fn link_before(self) -> Result<()> {
+        run(
+            self.bin
+                .clone()
+                .linking
+                .unwrap_or_default()
+                .before
+                .unwrap_or_default(),
+            self.config,
+            self.bin,
+            "Before",
+            self.quiet,
+        )?;
+        Ok(())
+    }
+    pub fn link_run(self) -> Result<()> {
+        run(
+            self.bin
+                .clone()
+                .linking
+                .unwrap_or_default()
+                .run
+                .unwrap_or_default(),
+            self.config,
+            self.bin,
+            "Before",
+            self.quiet,
+        )?;
+        Ok(())
+    }
+    pub fn link_after(self) -> Result<()> {
+        run(
+            self.bin
+                .clone()
+                .linking
+                .unwrap_or_default()
+                .after
+                .unwrap_or_default(),
+            self.config,
+            self.bin,
+            "Before",
+            self.quiet,
+        )?;
+        Ok(())
+    }
+}
+
 pub fn run(
     commands: Vec<String>,
     config: Config,
