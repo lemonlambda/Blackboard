@@ -9,7 +9,7 @@ pub struct Config {
 #[derive(Deserialize, Clone, Debug)]
 pub struct Bin {
     pub default: Option<bool>,
-    pub bin_name: Option<String>,
+    pub bin_name: String,
 
     pub tools: Option<Tools>,
     pub meta: Option<Meta>,
