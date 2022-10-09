@@ -19,12 +19,7 @@ impl CommandBuilder {
 
     pub fn comp_before(self) -> Result<()> {
         run(
-            self.bin
-                .clone()
-                .compiling
-                .unwrap_or_default()
-                .before
-                .unwrap_or_default(),
+            self.bin.clone().compiling.before,
             self.config,
             self.bin,
             "Before",
@@ -34,12 +29,7 @@ impl CommandBuilder {
     }
     pub fn comp_run(self) -> Result<()> {
         run(
-            self.bin
-                .clone()
-                .compiling
-                .unwrap_or_default()
-                .run
-                .unwrap_or_default(),
+            self.bin.clone().compiling.run,
             self.config,
             self.bin,
             "Run",
@@ -49,12 +39,7 @@ impl CommandBuilder {
     }
     pub fn comp_after(self) -> Result<()> {
         run(
-            self.bin
-                .clone()
-                .compiling
-                .unwrap_or_default()
-                .after
-                .unwrap_or_default(),
+            self.bin.clone().compiling.after,
             self.config,
             self.bin,
             "After",
@@ -65,12 +50,7 @@ impl CommandBuilder {
 
     pub fn link_before(self) -> Result<()> {
         run(
-            self.bin
-                .clone()
-                .linking
-                .unwrap_or_default()
-                .before
-                .unwrap_or_default(),
+            self.bin.clone().linking.before,
             self.config,
             self.bin,
             "Before",
@@ -80,12 +60,7 @@ impl CommandBuilder {
     }
     pub fn link_run(self) -> Result<()> {
         run(
-            self.bin
-                .clone()
-                .linking
-                .unwrap_or_default()
-                .run
-                .unwrap_or_default(),
+            self.bin.clone().linking.run,
             self.config,
             self.bin,
             "Run",
@@ -95,12 +70,7 @@ impl CommandBuilder {
     }
     pub fn link_after(self) -> Result<()> {
         run(
-            self.bin
-                .clone()
-                .linking
-                .unwrap_or_default()
-                .after
-                .unwrap_or_default(),
+            self.bin.clone().linking.after,
             self.config,
             self.bin,
             "After",
@@ -117,37 +87,40 @@ pub fn run(
     stage: &str,
     quiet: bool,
 ) -> Result<()> {
-    let commands = commands.into_iter().map(|x| {
-        let mut last = x.clone();
-        loop {
-            #[rustfmt::skip]
+    let commands = commands
+        .into_iter()
+        .map(|x| {
+            let mut last = x.clone();
+            loop {
+                #[rustfmt::skip]
             let tmp = last
-                .replace("${out_name}", &bin.clone().args.unwrap_or_default().out_name.unwrap_or_default())
-                .replace("${compiler}", &bin.clone().tools.unwrap_or_default().compiler.unwrap_or_default())
-                .replace("${linker}", &bin.clone().tools.unwrap_or_default().linker.unwrap_or_default())
+                .replace("${out_name}", &bin.clone().args.out_name)
+                .replace("${compiler}", &bin.clone().tools.compiler)
+                .replace("${linker}", &bin.clone().tools.linker)
                 .replace("${src_files}", &format!(
                     "$({})", 
-                    bin.clone().meta.unwrap_or_default().src_files.unwrap_or_default())
+                    bin.clone().meta.src_files)
                 )
                 .replace("${header_dirs}", &format!(
                     "$({})", 
-                    bin.clone().meta.unwrap_or_default().header_dirs.unwrap_or_default())
+                    bin.clone().meta.header_dirs)
                 )
                 .replace("${obj_files}", &format!(
                     "$({})", 
-                    bin.clone().meta.unwrap_or_default().obj_files.unwrap_or_default())
+                    bin.clone().meta.obj_files)
                 )
                 .replace("${name}", &config.clone().package.name)
                 .replace("${version}", &config.clone().package.version)
-                .replace("${compiler_args}", &bin.clone().args.unwrap_or_default().compiler_args.unwrap_or_default())
-                .replace("${linker_args}", &bin.clone().args.unwrap_or_default().linker_args.unwrap_or_default())
-                .replace("${out_path}", &bin.clone().args.unwrap_or_default().out_path.unwrap_or_default());
-            if last == tmp {
-                return tmp;
+                .replace("${compiler_args}", &bin.clone().args.compiler_args)
+                .replace("${linker_args}", &bin.clone().args.linker_args)
+                .replace("${out_path}", &bin.clone().args.out_path);
+                if last == tmp {
+                    return tmp;
+                }
+                last = tmp;
             }
-            last = tmp;
-        }
-	}).collect::<Vec<String>>();
+        })
+        .collect::<Vec<String>>();
 
     let cmd;
     let c;
