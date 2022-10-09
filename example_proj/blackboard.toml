@@ -8,29 +8,29 @@ version = "1.0.0"
 default = true       # optional
 bin_name = "default"
 
-[[bin.tools]]
+[bin.tools]
 compiler = "clang" # optional
 linker = "mold"    # optional
 
-[[bin.meta]]
+[bin.meta]
 src_files = "find ./src/ -name \"*.c\""       # optional
 header_dirs = "find ./src/include -type d"    # optional
 obj_files = "find ./target/obj -name \"*.o\"" # optional
 
-[[bin.args]]
+[bin.args]
 compiler_args = "-O2 -Wpedantic"            # optional
 linker_args = ""                            # optional
 out_path = "./target/bin/"                  # optional 
 out_name = "${out_path}/${name}-${version}" # optional
 
-[[bin.compiling]]
+[bin.compiling]
 before = ["mkdir -p ./target/bin ./target/obj"] # optional
 run = [
 	"${compiler} ${compiler_args} -c ${src_files} -I ${header_dirs}",
 ] # optional
 after = ["mv *.o target/obj"] # optional
 
-[[bin.linking]]
+[bin.linking]
 before = [] # optional
 run = [
 	"${compiler} ${linker_args} -B ${linker} ${obj_files} -o ${output_name}",
