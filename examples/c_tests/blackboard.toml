@@ -1,0 +1,14 @@
+[package]
+name = "example"
+version = "1.0.0"
+
+[[bin]]
+default = true
+bin_name = "default"
+
+[bin.args]
+linker_args = "-shared"
+out_path = "./target/lib/"
+
+[bin.compiling]
+before = ["mkdir -p ./target/lib ./target/obj"]
