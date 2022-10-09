@@ -42,7 +42,7 @@ impl CommandBuilder {
                 .unwrap_or_default(),
             self.config,
             self.bin,
-            "Before",
+            "Run",
             self.quiet,
         )?;
         Ok(())
@@ -57,7 +57,7 @@ impl CommandBuilder {
                 .unwrap_or_default(),
             self.config,
             self.bin,
-            "Before",
+            "After",
             self.quiet,
         )?;
         Ok(())
@@ -88,7 +88,7 @@ impl CommandBuilder {
                 .unwrap_or_default(),
             self.config,
             self.bin,
-            "Before",
+            "Run",
             self.quiet,
         )?;
         Ok(())
@@ -103,7 +103,7 @@ impl CommandBuilder {
                 .unwrap_or_default(),
             self.config,
             self.bin,
-            "Before",
+            "After",
             self.quiet,
         )?;
         Ok(())
