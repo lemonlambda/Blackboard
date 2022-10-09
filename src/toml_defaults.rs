@@ -1,26 +1,72 @@
 use crate::toml_format::{Args, Bin, Compiling, Linking, Meta, Tools};
+use paste::paste;
 
-const COMPILER: &'static str = "clang";
-const LINKER: &'static str = "clang";
+macro_rules! generate_const_fn {
+    ($(const $name:ident: &'static str = $value:expr;)*) => {
+        $(
+            pub const $name: &'static str = $value;
+            paste! {
+                #[allow(non_snake_case)]
+                pub fn [<$name _fn>]() -> String {
+                    $value.to_string()
+                }
+            }
+        )*
+    };
+    ($(const $name:ident: [&'static str; $num:literal] = $value:expr;)*) => {
+        $(
+            pub const $name: [&'static str; $num] = $value;
+            paste! {
+                #[allow(non_snake_case)]
+                pub fn [<$name _fn>]() -> Vec<String> {
+                    $value
+                        .to_vec()
+                        .into_iter()
+                        .map(|x: &'static str| x.to_string())
+                        .collect()
+                }
+            }
+        )*
+    };
+    ($(const $name:ident: $type:ty = $value:expr;)*) => {
+        $(
+            pub const $name: $type = $value;
+            paste! {
+                #[allow(non_snake_case)]
+                pub fn [<$name _fn>]() -> $type {
+                    $value
+                }
+            }
+        )*
+    };
+}
 
-const SRC_FILES: &'static str = "find ./src/ -name \"*.c\"";
-const HEADER_DIRS: &'static str = "find ./src/include -type d";
-const OBJ_FILES: &'static str = "find ./target/obj -name \"*.o\"";
+generate_const_fn! {
+    const COMPILER: &'static str = "clang";
+    const LINKER: &'static str = "clang";
 
-const COMP_BEFORE: [&'static str; 1] = ["mkdir -p ./target/bin ./target/obj"];
-const COMP_RUN: [&'static str; 1] =
-    ["${compiler} ${compiler_args} -c ${src_files} -I ${header_dirs}"];
-const COMP_AFTER: [&'static str; 1] = ["mv *.o target/obj"];
+    const SRC_FILES: &'static str = "find ./src/ -name \"*.c\"";
+    const HEADER_DIRS: &'static str = "find ./src/include -type d";
+    const OBJ_FILES: &'static str = "find ./target/obj -name \"*.o\"";
 
-const LINK_BEFORE: [&'static str; 0] = [];
-const LINK_RUN: [&'static str; 1] =
-    ["${compiler} ${linker_args} -B ${linker} ${obj_files} -o ${out_path}/${out_name}"];
-const LINK_AFTER: [&'static str; 0] = [];
+    const COMP_ARGS: &'static str = "-O2";
+    const LINK_ARGS: &'static str = "";
+    const OUT_PATH: &'static str = "./target/bin";
+    const OUT_NAME: &'static str = "${name}-${version}";
+}
 
-const COMP_ARGS: &'static str = "-O2";
-const LINK_ARGS: &'static str = "";
-const OUT_PATH: &'static str = "./target/bin";
-const OUT_NAME: &'static str = "${name}-${version}";
+generate_const_fn! {
+    const COMP_BEFORE: [&'static str; 1] = ["mkdir -p ./target/bin ./target/obj"];
+    const COMP_RUN: [&'static str; 1] =
+        ["${compiler} ${compiler_args} -c ${src_files} -I ${header_dirs}"];
+    const COMP_AFTER: [&'static str; 1] = ["mv *.o target/obj"];
+
+    const LINK_BEFORE: [&'static str; 0] = [];
+    const LINK_RUN: [&'static str; 1] =
+        ["${compiler} ${linker_args} -B ${linker} ${obj_files} -o ${out_path}/${out_name}"];
+    const LINK_AFTER: [&'static str; 0] = [];
+
+}
 
 impl Default for Bin {
     #[allow(unconditional_recursion)]
@@ -55,20 +101,20 @@ impl Default for Compiling {
     fn default() -> Self {
         Self {
             before: COMP_BEFORE
-                    .to_vec()
-                    .into_iter()
-                    .map(|x| x.to_string())
-                    .collect(),
+                .to_vec()
+                .into_iter()
+                .map(|x| x.to_string())
+                .collect(),
             run: COMP_RUN
-                    .to_vec()
-                    .into_iter()
-                    .map(|x| x.to_string())
-                    .collect(),
+                .to_vec()
+                .into_iter()
+                .map(|x| x.to_string())
+                .collect(),
             after: COMP_AFTER
-                    .to_vec()
-                    .into_iter()
-                    .map(|x| x.to_string())
-                    .collect(),
+                .to_vec()
+                .into_iter()
+                .map(|x| x.to_string())
+                .collect(),
         }
     }
 }
@@ -77,20 +123,20 @@ impl Default for Linking {
     fn default() -> Self {
         Self {
             before: LINK_BEFORE
-                    .to_vec()
-                    .into_iter()
-                    .map(|x| x.to_string())
-                    .collect(),
+                .to_vec()
+                .into_iter()
+                .map(|x| x.to_string())
+                .collect(),
             run: LINK_RUN
-                    .to_vec()
-                    .into_iter()
-                    .map(|x| x.to_string())
-                    .collect(),
+                .to_vec()
+                .into_iter()
+                .map(|x| x.to_string())
+                .collect(),
             after: LINK_AFTER
-                    .to_vec()
-                    .into_iter()
-                    .map(|x| x.to_string())
-                    .collect(),
+                .to_vec()
+                .into_iter()
+                .map(|x| x.to_string())
+                .collect(),
         }
     }
 }
