@@ -63,13 +63,13 @@ fn main() -> Result<()> {
 
                 // Linker
 
-                builder.clone().link_before()?;
-                builder.clone().link_run()?;
-                builder.clone().link_after()?;
-
                 if !quiet {
                     println!("{}", "Linking...".bright_magenta().bold());
                 }
+
+                builder.clone().link_before()?;
+                builder.clone().link_run()?;
+                builder.clone().link_after()?;
 
                 break;
             }
