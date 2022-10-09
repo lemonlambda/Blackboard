@@ -3,7 +3,13 @@ use serde_derive::Deserialize;
 #[derive(Deserialize, Clone, Debug)]
 pub struct Config {
     pub package: Package,
-    pub bins: Vec<Bin>,
+    pub bin: Vec<Bin>,
+}
+
+#[derive(Deserialize, Clone, Debug)]
+pub struct Package {
+    pub name: String,
+    pub version: String,
 }
 
 #[derive(Deserialize, Clone, Debug)]
@@ -16,12 +22,6 @@ pub struct Bin {
     pub compiling: Option<Compiling>,
     pub linking: Option<Linking>,
     pub args: Option<Args>,
-}
-
-#[derive(Deserialize, Clone, Debug)]
-pub struct Package {
-    pub name: String,
-    pub version: String,
 }
 
 #[derive(Deserialize, Clone, Debug)]
