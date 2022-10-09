@@ -49,7 +49,6 @@ fn main() -> Result<()> {
         let toml: Config = toml::from_str(&contents)?;
 
         for x in toml.clone().bin {
-            println!("{build_name} {} {:?}", x.bin_name, x.default);
             if build_name != "" {
                 if x.bin_name == build_name {
                     build(toml, x, quiet)?;
