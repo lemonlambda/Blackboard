@@ -23,15 +23,11 @@ const OUT_PATH: &'static str = "./target/bin";
 const OUT_NAME: &'static str = "${name}-${version}";
 
 impl Default for Bin {
+    #[allow(unconditional_recursion)]
     fn default() -> Self {
         Self {
-            tools: Default::default(),
-            meta: Default::default(),
-            compiling: Default::default(),
-            linking: Default::default(),
-            args: Default::default(),
-            default: Some(false),
-            bin_name: Default::default(),
+            default: false,
+            ..Default::default()
         }
     }
 }
@@ -39,8 +35,8 @@ impl Default for Bin {
 impl Default for Tools {
     fn default() -> Self {
         Self {
-            compiler: Some(COMPILER.to_string()),
-            linker: Some(LINKER.to_string()),
+            compiler: COMPILER.to_string(),
+            linker: LINKER.to_string(),
         }
     }
 }
@@ -48,9 +44,9 @@ impl Default for Tools {
 impl Default for Meta {
     fn default() -> Self {
         Self {
-            src_files: Some(SRC_FILES.to_string()),
-            header_dirs: Some(HEADER_DIRS.to_string()),
-            obj_files: Some(OBJ_FILES.to_string()),
+            src_files: SRC_FILES.to_string(),
+            header_dirs: HEADER_DIRS.to_string(),
+            obj_files: OBJ_FILES.to_string(),
         }
     }
 }
@@ -58,27 +54,21 @@ impl Default for Meta {
 impl Default for Compiling {
     fn default() -> Self {
         Self {
-            before: Some(
-                COMP_BEFORE
+            before: COMP_BEFORE
                     .to_vec()
                     .into_iter()
                     .map(|x| x.to_string())
                     .collect(),
-            ),
-            run: Some(
-                COMP_RUN
+            run: COMP_RUN
                     .to_vec()
                     .into_iter()
                     .map(|x| x.to_string())
                     .collect(),
-            ),
-            after: Some(
-                COMP_AFTER
+            after: COMP_AFTER
                     .to_vec()
                     .into_iter()
                     .map(|x| x.to_string())
                     .collect(),
-            ),
         }
     }
 }
@@ -86,27 +76,21 @@ impl Default for Compiling {
 impl Default for Linking {
     fn default() -> Self {
         Self {
-            before: Some(
-                LINK_BEFORE
+            before: LINK_BEFORE
                     .to_vec()
                     .into_iter()
                     .map(|x| x.to_string())
                     .collect(),
-            ),
-            run: Some(
-                LINK_RUN
+            run: LINK_RUN
                     .to_vec()
                     .into_iter()
                     .map(|x| x.to_string())
                     .collect(),
-            ),
-            after: Some(
-                LINK_AFTER
+            after: LINK_AFTER
                     .to_vec()
                     .into_iter()
                     .map(|x| x.to_string())
                     .collect(),
-            ),
         }
     }
 }
@@ -114,10 +98,10 @@ impl Default for Linking {
 impl Default for Args {
     fn default() -> Self {
         Self {
-            compiler_args: Some(COMP_ARGS.to_string()),
-            linker_args: Some(LINK_ARGS.to_string()),
-            out_name: Some(OUT_NAME.to_string()),
-            out_path: Some(OUT_PATH.to_string()),
+            compiler_args: COMP_ARGS.to_string(),
+            linker_args: LINK_ARGS.to_string(),
+            out_name: OUT_NAME.to_string(),
+            out_path: OUT_PATH.to_string(),
         }
     }
 }

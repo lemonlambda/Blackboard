@@ -55,7 +55,7 @@ fn main() -> Result<()> {
                     break;
                 }
             } else {
-                if x.default == Some(true) {
+                if x.default == true {
                     build(toml, x, quiet)?;
                     break;
                 }
