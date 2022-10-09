@@ -7,7 +7,7 @@ use std::{env, fs::read_to_string, path::Path};
 use anyhow::{Ok, Result};
 use clap::{command, Parser, Subcommand};
 use colored::Colorize;
-use toml_format::Config;
+use toml_format::{Bin, Config};
 
 use crate::command_builder::CommandBuilder;
 
@@ -49,33 +49,46 @@ fn main() -> Result<()> {
         let toml: Config = toml::from_str(&contents)?;
 
         for x in toml.clone().bin {
-            if x.bin_name == build_name {
-                let builder = CommandBuilder::new(toml.clone(), x, quiet);
-
-                // Compiler
-
-                if !quiet {
-                    println!("{}", "Compiling...".bright_magenta().bold());
+            println!("{build_name} {} {:?}", x.bin_name, x.default);
+            if build_name != "" {
+                if x.bin_name == build_name {
+                    build(toml, x, quiet)?;
+                    break;
                 }
-                builder.clone().comp_before()?;
-                builder.clone().comp_run()?;
-                builder.clone().comp_after()?;
-
-                // Linker
-
-                if !quiet {
-                    println!("{}", "Linking...".bright_magenta().bold());
+            } else {
+                if x.default == Some(true) {
+                    build(toml, x, quiet)?;
+                    break;
                 }
-
-                builder.clone().link_before()?;
-                builder.clone().link_run()?;
-                builder.clone().link_after()?;
-
-                break;
             }
         }
     } else {
     }
+
+    Ok(())
+}
+
+fn build(toml: Config, x: Bin, quiet: bool) -> Result<()> {
+    let builder = CommandBuilder::new(toml.clone(), x, quiet);
+
+    // Compiler
+
+    if !quiet {
+        println!("{}", "Compiling...".bright_magenta().bold());
+    }
+    builder.clone().comp_before()?;
+    builder.clone().comp_run()?;
+    builder.clone().comp_after()?;
+
+    // Linker
+
+    if !quiet {
+        println!("{}", "Linking...".bright_magenta().bold());
+    }
+
+    builder.clone().link_before()?;
+    builder.clone().link_run()?;
+    builder.clone().link_after()?;
 
     Ok(())
 }
