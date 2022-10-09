@@ -6,7 +6,7 @@ version = "1.0.0"
 
 [[bin]]
 default = true       # optional
-bin_name = "default" # optional
+bin_name = "default"
 
 [[bin.tools]]
 compiler = "clang" # optional
