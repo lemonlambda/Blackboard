@@ -14,8 +14,8 @@ const COMP_AFTER: [&'static str; 1] = ["mv *.o target/obj"];
 
 const LINK_BEFORE: [&'static str; 0] = [];
 const LINK_RUN: [&'static str; 1] =
-    ["${compiler} ${linker_args} -B ${linker} ${obj_files} -o ${output_name}"];
-const LINK_AFTER: [&'static str; 1] = ["rm -rf ./target/obj"];
+    ["${compiler} ${linker_args} -B ${linker} ${obj_files} -o ${out_path}/${out_name}"];
+const LINK_AFTER: [&'static str; 0] = [];
 
 const COMP_ARGS: &'static str = "-O2";
 const LINK_ARGS: &'static str = "";
