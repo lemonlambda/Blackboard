@@ -8,6 +8,9 @@ pub struct Config {
 
 #[derive(Deserialize, Clone, Debug)]
 pub struct Bin {
+    pub default: Option<bool>,
+    pub bin_name: Option<String>,
+
     pub tools: Option<Tools>,
     pub meta: Option<Meta>,
     pub compiling: Option<Compiling>,
@@ -39,7 +42,7 @@ pub struct Args {
     pub compiler_args: Option<String>,
     pub linker_args: Option<String>,
     pub out_path: Option<String>,
-    pub output_name: Option<String>,
+    pub out_name: Option<String>,
 }
 
 #[derive(Deserialize, Clone, Debug)]
