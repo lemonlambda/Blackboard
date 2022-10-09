@@ -14,13 +14,7 @@ Create `blackboard.toml` in your C dir and put
 name = "example"
 version = "1.0.0"
 ```
-you can change the linker/compiler by adding
-```toml
-[tools]
-compiler = "gcc"
-linker = "gcc"
-```
-for example
+See [filled out toml](./examples/example_proj/blackboard.toml)
 
 ## Running
 Make sure you have `~/.cargo/bin` on path if you're on linux.
