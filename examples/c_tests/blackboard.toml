@@ -9,6 +9,7 @@ bin_name = "default"
 [bin.args]
 linker_args = "-shared"
 out_path = "./target/lib/"
+out_name = "${name}-${version}.so"
 
 [bin.compiling]
 before = ["mkdir -p ./target/lib ./target/obj"]
