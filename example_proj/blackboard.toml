@@ -33,6 +33,6 @@ after = ["mv *.o target/obj"] # optional
 [bin.linking]
 before = [] # optional
 run = [
-	"${compiler} ${linker_args} -B ${linker} ${obj_files} -o ${output_name}",
+	"${compiler} ${linker_args} -B ${linker} ${obj_files} -o ${out_path}${out_name}",
 ] # optional
-after = ["rm -rf ./target/obj"] # optional
+after = [] # optional
