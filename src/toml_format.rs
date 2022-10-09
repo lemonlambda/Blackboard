@@ -38,6 +38,7 @@ pub struct Meta {
 pub struct Args {
     pub compiler_args: Option<String>,
     pub linker_args: Option<String>,
+    pub out_path: Option<String>,
     pub output_name: Option<String>,
 }
 
