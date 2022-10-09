@@ -122,25 +122,26 @@ pub fn run(
         loop {
             #[rustfmt::skip]
             let tmp = last
-                .replace("${output_name}", &bin.clone().args.unwrap_or_default().out_name.unwrap_or(String::from("./target/bin/${name}-${version}")))
-                .replace("${compiler}", &bin.clone().tools.unwrap_or_default().compiler.unwrap_or(String::from("clang")))
-                .replace("${linker}", &bin.clone().tools.unwrap_or_default().linker.unwrap_or(String::from("clang")))
+                .replace("${out_name}", &bin.clone().args.unwrap_or_default().out_name.unwrap_or_default())
+                .replace("${compiler}", &bin.clone().tools.unwrap_or_default().compiler.unwrap_or_default())
+                .replace("${linker}", &bin.clone().tools.unwrap_or_default().linker.unwrap_or_default())
                 .replace("${src_files}", &format!(
                     "$({})", 
-                    bin.clone().meta.unwrap_or_default().src_files.unwrap_or(String::from("find ./src/ -name \"*.c\""))
-                ))
+                    bin.clone().meta.unwrap_or_default().src_files.unwrap_or_default())
+                )
                 .replace("${header_dirs}", &format!(
                     "$({})", 
-                    bin.clone().meta.unwrap_or_default().header_dirs.unwrap_or(String::from("find ./src/include/ -type d"))
-                ))
+                    bin.clone().meta.unwrap_or_default().header_dirs.unwrap_or_default())
+                )
                 .replace("${obj_files}", &format!(
                     "$({})", 
-                    bin.clone().meta.unwrap_or_default().obj_files.unwrap_or(String::from("find ./target/obj/ -name \"*.o\""))
-                ))
+                    bin.clone().meta.unwrap_or_default().obj_files.unwrap_or_default())
+                )
                 .replace("${name}", &config.clone().package.name)
                 .replace("${version}", &config.clone().package.version)
-                .replace("${compiler_args}", &bin.clone().args.unwrap_or_default().compiler_args.unwrap_or(String::from("")))
-                .replace("${linker_args}", &bin.clone().args.unwrap_or_default().linker_args.unwrap_or(String::from("")));
+                .replace("${compiler_args}", &bin.clone().args.unwrap_or_default().compiler_args.unwrap_or_default())
+                .replace("${linker_args}", &bin.clone().args.unwrap_or_default().linker_args.unwrap_or_default())
+                .replace("${out_path}", &bin.clone().args.unwrap_or_default().out_path.unwrap_or_default());
             if last == tmp {
                 return tmp;
             }
