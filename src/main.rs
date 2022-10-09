@@ -1,4 +1,5 @@
 mod command_builder;
+mod toml_defaults;
 mod toml_format;
 
 use std::{env, fs::read_to_string, path::Path};
