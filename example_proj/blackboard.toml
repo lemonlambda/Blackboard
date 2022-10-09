@@ -18,10 +18,10 @@ header_dirs = "find ./src/include -type d"    # optional
 obj_files = "find ./target/obj -name \"*.o\"" # optional
 
 [bin.args]
-compiler_args = "-O2 -Wpedantic"            # optional
-linker_args = ""                            # optional
-out_path = "./target/bin/"                  # optional 
-out_name = "${out_path}/${name}-${version}" # optional
+compiler_args = "-O2 -Wpedantic" # optional
+linker_args = ""                 # optional
+out_path = "./target/bin/"       # optional 
+out_name = "${name}-${version}"  # optional
 
 [bin.compiling]
 before = ["mkdir -p ./target/bin ./target/obj"] # optional
