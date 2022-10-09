@@ -3,10 +3,16 @@ use serde_derive::Deserialize;
 #[derive(Deserialize, Clone, Debug)]
 pub struct Config {
     pub package: Package,
+    pub bins: Vec<Bin>,
+}
+
+#[derive(Deserialize, Clone, Debug)]
+pub struct Bin {
     pub tools: Option<Tools>,
     pub meta: Option<Meta>,
-    pub compile: Option<Compile>,
+    pub compiling: Option<Compiling>,
     pub linking: Option<Linking>,
+    pub args: Option<Args>,
 }
 
 #[derive(Deserialize, Clone, Debug)]
@@ -26,13 +32,17 @@ pub struct Meta {
     pub src_files: Option<String>,
     pub header_dirs: Option<String>,
     pub obj_files: Option<String>,
+}
+
+#[derive(Deserialize, Clone, Debug, Default)]
+pub struct Args {
     pub compiler_args: Option<String>,
     pub linker_args: Option<String>,
     pub output_name: Option<String>,
 }
 
 #[derive(Deserialize, Clone, Debug, Default)]
-pub struct Compile {
+pub struct Compiling {
     pub before: Option<Vec<String>>,
     pub run: Option<Vec<String>>,
     pub after: Option<Vec<String>>,
