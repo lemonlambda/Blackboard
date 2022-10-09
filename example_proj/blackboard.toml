@@ -5,8 +5,8 @@ version = "1.0.0"
 # this is a fully filled out toml
 
 [[bin]]
-default = true   # optional
-name = "default" # optional
+default = true       # optional
+bin_name = "default" # optional
 
 [[bin.tools]]
 compiler = "clang" # optional
@@ -18,10 +18,10 @@ header_dirs = "find ./src/include -type d"    # optional
 obj_files = "find ./target/obj -name \"*.o\"" # optional
 
 [[bin.args]]
-compiler_args = "-O2 -Wpedantic"               # optional
-linker_args = ""                               # optional
-out_path = "./target/bin/"                     # optional 
-output_name = "${out_path}/${name}-${version}" # optional
+compiler_args = "-O2 -Wpedantic"            # optional
+linker_args = ""                            # optional
+out_path = "./target/bin/"                  # optional 
+out_name = "${out_path}/${name}-${version}" # optional
 
 [[bin.compiling]]
 before = ["mkdir -p ./target/bin ./target/obj"] # optional
